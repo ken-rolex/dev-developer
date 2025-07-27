@@ -3,8 +3,72 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Users, MessageCircle, Instagram, Github } from "lucide-react"
+import { useState } from "react"
 
 export default function JoinUs() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    university: '',
+    academicYear: '',
+    interests: '',
+    experienceLevel: '',
+    whyJoin: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSelectChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('');
+
+    try {
+      const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          fullName: '',
+          email: '',
+          university: '',
+          academicYear: '',
+          interests: '',
+          experienceLevel: '',
+          whyJoin: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <section id="join" className="py-20 bg-slate-900 dark:bg-slate-900 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
