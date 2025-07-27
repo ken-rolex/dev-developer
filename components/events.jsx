@@ -1,9 +1,73 @@
 import { Button } from "@/components/ui/button"
 import { Calendar, Clock, MapPin, Users } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export default function Events() {
-  const upcomingEvents = [
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [registering, setRegistering] = useState({});
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch('/api/events');
+      const data = await response.json();
+      if (response.ok) {
+        setEvents(data.events || []);
+      }
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegistration = async (event) => {
+    const userName = prompt('Enter your name:');
+    const userEmail = prompt('Enter your email:');
+    
+    if (!userName || !userEmail) return;
+
+    setRegistering({ ...registering, [event._id]: true });
+
+    try {
+      const response = await fetch('/api/events/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventId: event._id,
+          eventTitle: event.title,
+          userName,
+          userEmail
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Successfully registered for the event!');
+        // Refresh events to update attendee count
+        fetchEvents();
+      } else {
+        alert(data.error || 'Failed to register for event');
+      }
+    } catch (error) {
+      console.error('Error registering for event:', error);
+      alert('Failed to register for event');
+    } finally {
+      setRegistering({ ...registering, [event._id]: false });
+    }
+  };
+
+  // Fallback to hardcoded events if no dynamic events are available
+  const fallbackEvents = [
     {
+      _id: 'fallback-1',
       title: "Full-Stack Web Development Workshop",
       date: "March 15, 2024",
       time: "2:00 PM - 6:00 PM",
@@ -14,6 +78,7 @@ export default function Events() {
       tags: ["React", "Node.js", "MongoDB"],
     },
     {
+      _id: 'fallback-2',
       title: "AI/ML Study Group Kickoff",
       date: "March 20, 2024",
       time: "7:00 PM - 9:00 PM",
@@ -24,6 +89,7 @@ export default function Events() {
       tags: ["Python", "TensorFlow", "AI/ML"],
     },
     {
+      _id: 'fallback-3',
       title: "48-Hour Hackathon: Climate Solutions",
       date: "March 25-27, 2024",
       time: "Friday 6PM - Sunday 6PM",
@@ -33,7 +99,9 @@ export default function Events() {
         "Build innovative solutions to combat climate change. Prizes, mentorship, and networking opportunities await!",
       tags: ["Hackathon", "Climate Tech", "Innovation"],
     },
-  ]
+  ];
+
+  const displayEvents = events.length > 0 ? events : fallbackEvents;
 
   return (
     <section id="events" className="py-12 sm:py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-500">
