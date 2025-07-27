@@ -88,13 +88,27 @@ export default function JoinUs() {
               <h3 className="text-2xl font-bold text-white animate-fadeInRight animation-delay-200">Apply to Join</h3>
             </div>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {submitStatus === 'success' && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                  Application submitted successfully! We'll review it and get back to you soon.
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                  Failed to submit application. Please try again.
+                </div>
+              )}
               {/* Name and Email Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="animate-slideInLeft animation-delay-300">
                   <label className="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
                   <Input
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
                     placeholder="John Doe"
+                    required
                     className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-purple-500 focus:ring-purple-500/20"
                   />
                 </div>
@@ -102,7 +116,11 @@ export default function JoinUs() {
                   <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
                   <Input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="john@university.edu"
+                    required
                     className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-purple-500 focus:ring-purple-500/20"
                   />
                 </div>
@@ -113,45 +131,34 @@ export default function JoinUs() {
                 <div className="animate-slideInLeft animation-delay-500">
                   <label className="block text-sm font-medium text-slate-300 mb-2">University</label>
                   <Input
+                    name="university"
+                    value={formData.university}
+                    onChange={handleChange}
                     placeholder="Stanford University"
+                    required
                     className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-purple-500 focus:ring-purple-500/20"
                   />
                 </div>
                 <div className="animate-slideInRight animation-delay-600">
                   <label className="block text-sm font-medium text-slate-300 mb-2">Academic Year</label>
-                  <Select>
+                  <Select onValueChange={(value) => handleSelectChange('academicYear', value)} required>
                     <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white focus:border-purple-500 focus:ring-purple-500/20 data-[state=open]:border-purple-500">
                       <SelectValue placeholder="Select your year" className="text-white" />
                     </SelectTrigger>
                     <SelectContent className="bg-slate-800 border-slate-600 text-white">
-                      <SelectItem
-                        value="freshman"
-                        className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                      >
+                      <SelectItem value="freshman" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                         Freshman
                       </SelectItem>
-                      <SelectItem
-                        value="sophomore"
-                        className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                      >
+                      <SelectItem value="sophomore" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                         Sophomore
                       </SelectItem>
-                      <SelectItem
-                        value="junior"
-                        className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                      >
+                      <SelectItem value="junior" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                         Junior
                       </SelectItem>
-                      <SelectItem
-                        value="senior"
-                        className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                      >
+                      <SelectItem value="senior" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                         Senior
                       </SelectItem>
-                      <SelectItem
-                        value="graduate"
-                        className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                      >
+                      <SelectItem value="graduate" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                         Graduate
                       </SelectItem>
                     </SelectContent>
@@ -163,7 +170,11 @@ export default function JoinUs() {
               <div className="animate-fadeInUp animation-delay-700">
                 <label className="block text-sm font-medium text-slate-300 mb-2">Areas of Interest</label>
                 <Input
+                  name="interests"
+                  value={formData.interests}
+                  onChange={handleChange}
                   placeholder="Web Development, AI/ML, Mobile Apps, etc"
+                  required
                   className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-purple-500 focus:ring-purple-500/20"
                 />
               </div>
@@ -171,33 +182,21 @@ export default function JoinUs() {
               {/* Experience Level */}
               <div className="animate-fadeInUp animation-delay-800">
                 <label className="block text-sm font-medium text-slate-300 mb-2">Experience Level</label>
-                <Select>
+                <Select onValueChange={(value) => handleSelectChange('experienceLevel', value)} required>
                   <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white focus:border-purple-500 focus:ring-purple-500/20 data-[state=open]:border-purple-500">
                     <SelectValue placeholder="Select your experience level" className="text-white" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-600 text-white">
-                    <SelectItem
-                      value="beginner"
-                      className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                    >
+                    <SelectItem value="beginner" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                       Beginner
                     </SelectItem>
-                    <SelectItem
-                      value="intermediate"
-                      className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                    >
+                    <SelectItem value="intermediate" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                       Intermediate
                     </SelectItem>
-                    <SelectItem
-                      value="advanced"
-                      className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                    >
+                    <SelectItem value="advanced" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                       Advanced
                     </SelectItem>
-                    <SelectItem
-                      value="expert"
-                      className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white"
-                    >
+                    <SelectItem value="expert" className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white data-[highlighted]:bg-slate-700 data-[highlighted]:text-white">
                       Expert
                     </SelectItem>
                   </SelectContent>
@@ -210,14 +209,21 @@ export default function JoinUs() {
                   Why do you want to join? (Optional)
                 </label>
                 <Textarea
+                  name="whyJoin"
+                  value={formData.whyJoin}
+                  onChange={handleChange}
                   placeholder="Tell us about your goals and what you hope to achieve..."
                   rows={4}
                   className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-purple-500 focus:ring-purple-500/20 resize-none"
                 />
               </div>
 
-              <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 text-lg font-semibold rounded-xl border-0 btn-animate animate-bounceIn animation-delay-1000">
-                Submit Application
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 text-lg font-semibold rounded-xl border-0 btn-animate animate-bounceIn animation-delay-1000 disabled:opacity-50"
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </Button>
             </form>
           </div>
