@@ -1,8 +1,32 @@
 import { Star, Quote } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export default function Testimonials() {
-  const testimonials = [
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      const response = await fetch('/api/testimonials');
+      const data = await response.json();
+      if (response.ok) {
+        setTestimonials(data.testimonials || []);
+      }
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fallback testimonials if no dynamic data is available
+  const fallbackTestimonials = [
     {
+      _id: 'fallback-1',
       name: "Emily Zhang",
       role: "Computer Science Student",
       company: "Interning at Microsoft",
@@ -12,8 +36,9 @@ export default function Testimonials() {
       image: "/placeholder.svg?height=80&width=80",
     },
     {
+      _id: 'fallback-2',
       name: "Marcus Johnson",
-      role: "Self-taught Developer",
+      role: "Self-taught Developer", 
       company: "Now at Stripe",
       content:
         "As someone without a CS degree, I was intimidated by coding communities. But this group welcomed me with open arms and helped me build the skills and confidence to break into tech.",
@@ -21,6 +46,7 @@ export default function Testimonials() {
       image: "/placeholder.svg?height=80&width=80",
     },
     {
+      _id: 'fallback-3',
       name: "Sofia Gonzalez",
       role: "Bootcamp Graduate",
       company: "Frontend Developer at Airbnb",
@@ -28,35 +54,10 @@ export default function Testimonials() {
         "The collaborative projects here gave me real-world experience that bootcamp couldn't provide. I built my entire portfolio through community projects and made lifelong friends.",
       rating: 5,
       image: "/placeholder.svg?height=80&width=80",
-    },
-    {
-      name: "David Park",
-      role: "Engineering Student",
-      company: "Startup Founder",
-      content:
-        "I found my co-founder and first team members in this community. The entrepreneurial spirit and technical expertise here helped me turn my idea into a real business.",
-      rating: 5,
-      image: "/placeholder.svg?height=80&width=80",
-    },
-    {
-      name: "Aisha Williams",
-      role: "Career Changer",
-      company: "Data Scientist at Netflix",
-      content:
-        "Switching from marketing to tech felt impossible until I found this community. The study groups and project collaborations made learning fun and achievable.",
-      rating: 5,
-      image: "/placeholder.svg?height=80&width=80",
-    },
-    {
-      name: "Ryan O'Connor",
-      role: "High School Student",
-      company: "Accepted to MIT",
-      content:
-        "Even as a high schooler, I felt welcomed and challenged. The advanced projects and mentorship helped me build a portfolio that got me into my dream college.",
-      rating: 5,
-      image: "/placeholder.svg?height=80&width=80",
-    },
-  ]
+    }
+  ];
+
+  const displayTestimonials = testimonials.length > 0 ? testimonials : fallbackTestimonials;
 
   return (
     <section id="testimonials" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-500">
