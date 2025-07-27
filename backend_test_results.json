@@ -1,0 +1,172 @@
+{
+  "summary": {
+    "total_tests": 23,
+    "passed": 23,
+    "failed": 0,
+    "success_rate": 100.0,
+    "duration": 21.69870162010193
+  },
+  "results": [
+    {
+      "test": "Database Seeding",
+      "status": "PASS",
+      "message": "Database seeded successfully: Database seeded successfully!",
+      "timestamp": "2025-07-27T20:20:12.096425",
+      "response_data": null
+    },
+    {
+      "test": "Contact POST - Valid Data",
+      "status": "PASS",
+      "message": "Contact submitted successfully: Message sent successfully!",
+      "timestamp": "2025-07-27T20:20:12.905528",
+      "response_data": null
+    },
+    {
+      "test": "Contact POST - Invalid Data",
+      "status": "PASS",
+      "message": "Correctly rejected invalid data with 400 status",
+      "timestamp": "2025-07-27T20:20:12.973663",
+      "response_data": null
+    },
+    {
+      "test": "Contact GET",
+      "status": "PASS",
+      "message": "Retrieved 2 contact messages",
+      "timestamp": "2025-07-27T20:20:13.313563",
+      "response_data": null
+    },
+    {
+      "test": "Applications POST - Valid Data",
+      "status": "PASS",
+      "message": "Application submitted: Application submitted successfully!",
+      "timestamp": "2025-07-27T20:20:14.466697",
+      "response_data": null
+    },
+    {
+      "test": "Applications POST - Duplicate Email",
+      "status": "PASS",
+      "message": "Correctly rejected duplicate email",
+      "timestamp": "2025-07-27T20:20:15.232487",
+      "response_data": null
+    },
+    {
+      "test": "Applications GET",
+      "status": "PASS",
+      "message": "Retrieved 2 applications",
+      "timestamp": "2025-07-27T20:20:15.585109",
+      "response_data": null
+    },
+    {
+      "test": "Events POST - Create Event",
+      "status": "PASS",
+      "message": "Event created successfully: Event created successfully!",
+      "timestamp": "2025-07-27T20:20:17.242386",
+      "response_data": null
+    },
+    {
+      "test": "Events GET",
+      "status": "PASS",
+      "message": "Retrieved 7 upcoming events",
+      "timestamp": "2025-07-27T20:20:17.637299",
+      "response_data": null
+    },
+    {
+      "test": "Event Registration POST",
+      "status": "PASS",
+      "message": "Registration successful: Successfully registered for the event!",
+      "timestamp": "2025-07-27T20:20:18.969160",
+      "response_data": null
+    },
+    {
+      "test": "Event Registration - Duplicate",
+      "status": "PASS",
+      "message": "Correctly rejected duplicate registration",
+      "timestamp": "2025-07-27T20:20:19.684282",
+      "response_data": null
+    },
+    {
+      "test": "Event Registration GET",
+      "status": "PASS",
+      "message": "Retrieved 2 registrations",
+      "timestamp": "2025-07-27T20:20:20.062884",
+      "response_data": null
+    },
+    {
+      "test": "Testimonials POST",
+      "status": "PASS",
+      "message": "Testimonial submitted: Testimonial submitted successfully!",
+      "timestamp": "2025-07-27T20:20:20.973287",
+      "response_data": null
+    },
+    {
+      "test": "Testimonials GET",
+      "status": "PASS",
+      "message": "Retrieved 6 approved testimonials",
+      "timestamp": "2025-07-27T20:20:21.373351",
+      "response_data": null
+    },
+    {
+      "test": "Resources POST",
+      "status": "PASS",
+      "message": "Resource created: Resource added successfully!",
+      "timestamp": "2025-07-27T20:20:22.199517",
+      "response_data": null
+    },
+    {
+      "test": "Resources GET",
+      "status": "PASS",
+      "message": "Retrieved 9 active resources",
+      "timestamp": "2025-07-27T20:20:22.602220",
+      "response_data": null
+    },
+    {
+      "test": "Resources Tracking",
+      "status": "PASS",
+      "message": "Download tracked successfully",
+      "timestamp": "2025-07-27T20:20:23.465436",
+      "response_data": null
+    },
+    {
+      "test": "Admin GET - Dashboard",
+      "status": "PASS",
+      "message": "Retrieved admin dashboard data with 6 sections",
+      "timestamp": "2025-07-27T20:20:29.751679",
+      "response_data": null
+    },
+    {
+      "test": "Admin GET - Stats",
+      "status": "PASS",
+      "message": "Retrieved statistics: {'contacts': 2, 'applications': 2, 'registrations': 2, 'events': 7}",
+      "timestamp": "2025-07-27T20:20:30.118839",
+      "response_data": null
+    },
+    {
+      "test": "Contact - Empty Data",
+      "status": "PASS",
+      "message": "Correctly validated data with 400 status",
+      "timestamp": "2025-07-27T20:20:30.178799",
+      "response_data": null
+    },
+    {
+      "test": "Applications - Incomplete Data",
+      "status": "PASS",
+      "message": "Correctly validated data with 400 status",
+      "timestamp": "2025-07-27T20:20:30.248550",
+      "response_data": null
+    },
+    {
+      "test": "Events - Missing Required Fields",
+      "status": "PASS",
+      "message": "Correctly validated data with 400 status",
+      "timestamp": "2025-07-27T20:20:30.558966",
+      "response_data": null
+    },
+    {
+      "test": "Testimonials - Incomplete Data",
+      "status": "PASS",
+      "message": "Correctly validated data with 400 status",
+      "timestamp": "2025-07-27T20:20:30.642913",
+      "response_data": null
+    }
+  ]
+}
