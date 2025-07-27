@@ -73,48 +73,54 @@ export default function Testimonials() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className={`bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 card-hover stagger-item animate-zoomIn`}
-              style={{ animationDelay: `${index * 0.15}s` }}
-            >
-              <div className="flex items-center mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-5 w-5 text-blue-400 fill-current animate-bounceIn`}
-                    style={{ animationDelay: `${index * 0.15 + i * 0.05}s` }}
+          {loading ? (
+            <div className="col-span-3 text-center py-8">
+              <p className="text-gray-600 dark:text-gray-300">Loading testimonials...</p>
+            </div>
+          ) : (
+            displayTestimonials.map((testimonial, index) => (
+              <div
+                key={testimonial._id || index}
+                className={`bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 card-hover stagger-item animate-zoomIn`}
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                <div className="flex items-center mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-5 w-5 text-blue-400 fill-current animate-bounceIn`}
+                      style={{ animationDelay: `${index * 0.15 + i * 0.05}s` }}
+                    />
+                  ))}
+                </div>
+
+                <Quote className="h-8 w-8 text-blue-600 mb-4 animate-rotateIn animation-delay-200" />
+
+                <p className="text-gray-700 dark:text-gray-300 mb-6 italic animate-fadeInUp animation-delay-400">
+                  "{testimonial.content}"
+                </p>
+
+                <div className="flex items-center">
+                  <img
+                    src={testimonial.image || "/placeholder.svg"}
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full mr-4 object-cover animate-scaleIn animation-delay-500"
                   />
-                ))}
-              </div>
-
-              <Quote className="h-8 w-8 text-blue-600 mb-4 animate-rotateIn animation-delay-200" />
-
-              <p className="text-gray-700 dark:text-gray-300 mb-6 italic animate-fadeInUp animation-delay-400">
-                "{testimonial.content}"
-              </p>
-
-              <div className="flex items-center">
-                <img
-                  src={testimonial.image || "/placeholder.svg"}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full mr-4 object-cover animate-scaleIn animation-delay-500"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white animate-fadeInLeft animation-delay-600">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 animate-fadeInLeft animation-delay-700">
-                    {testimonial.role}
-                  </p>
-                  <p className="text-sm text-blue-600 font-medium animate-fadeInLeft animation-delay-800">
-                    {testimonial.company}
-                  </p>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white animate-fadeInLeft animation-delay-600">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 animate-fadeInLeft animation-delay-700">
+                      {testimonial.role}
+                    </p>
+                    <p className="text-sm text-blue-600 font-medium animate-fadeInLeft animation-delay-800">
+                      {testimonial.company}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700 rounded-xl p-8 text-center text-white scale-in-section">
